@@ -43,30 +43,27 @@ app.get("/",(req,res)=>{
 
 //The endpoint for the webserver ending with /url/emotion
 app.get("/url/emotion", (req,res) => {
-    // //Extract the url passed from the client through the request object
-    app.get("/url/emotion", (req,res) => {
-        let urlToAnalyze = req.query.url
-        const analyzeParams = 
-        {
-            "url": urlToAnalyze,
-            "features": {
-                "keywords": {
-                    "emotion": true,
-                    "limit": 1
-                }
+    let urlToAnalyze = req.query.url
+    const analyzeParams = 
+    {
+        "url": urlToAnalyze,
+        "features": {
+            "keywords": {
+                "emotion": true,
+                "limit": 1
             }
         }
-        
-        const naturalLanguageUnderstanding = getNLUInstance();
-        
-        naturalLanguageUnderstanding.analyze(analyzeParams)
-        .then(analysisResults => {
-            //Retrieve the emotion and return it as a formatted string
-            return res.send(analysisResults.result.keywords[0].emotion,null,2);
-        })
-        .catch(err => {
-            return res.send("Could not do desired operation "+err);
-        });
+    }
+    
+    const naturalLanguageUnderstanding = getNLUInstance();
+    
+    naturalLanguageUnderstanding.analyze(analyzeParams)
+    .then(analysisResults => {
+        //Retrieve the emotion and return it as a formatted string
+        return res.send(analysisResults.result.keywords[0].emotion,null,2);
+    })
+    .catch(err => {
+        return res.send("Could not do desired operation "+err);
     });
 });
 
